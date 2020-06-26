@@ -44,4 +44,4 @@ log.txt
 .env
 __pycache__/
 *.html
-.vscode
+.vscode/
