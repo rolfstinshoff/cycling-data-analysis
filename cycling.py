@@ -29,23 +29,22 @@ with open(log_file, 'a+') as log:
     log.write(f'Script started running at: {datetime.datetime.now()}')
 
 # read the .fit file
-# dframe, sessionframe = dr.retrieve_data(file_path, log_file)
-# dr.calculate(dframe, sessionframe)
+dframe, sessionframe = dr.retrieve_data(file_path, log_file)
+dr.calculate(dframe, sessionframe)
 
 # plot the ride analysis
-# ride.plot_google_map(dframe, log_file)
-# ride.plot_analysis_adjusted(dframe, sessionframe, filename, log_file)
-# data_table = ride.render_data_table(ride.create_data_table(sessionframe))
+ride.plot_google_map(dframe, log_file)
+ride.plot_analysis_adjusted(dframe, sessionframe, filename, log_file)
+data_table = ride.render_data_table(ride.create_data_table(sessionframe))
 
 # create the initial database
-# db.check_if_db_exists(database, data_fields, session_fields, log_file)
+db.check_if_db_exists(database, data_fields, session_fields, log_file)
 
 # write your data to a db and/or Excel file
 # de.write_Excel_file(dframe, sessionframe, excel_out, log_file)
-# db.save_data_to_db(dframe, sessionframe, filename, log_file, database)
+db.save_data_to_db(dframe, sessionframe, filename, log_file, database)
 
-hr_zones = db.read_from_database(database)
-print(f'HR zones are:\n{hr_zones.iloc[:, 60:70]}')
+# hr_zones = db.read_from_database(database)
 
 # run only this command if you want to load all your rides into a db
 # db.save_all(path_dir, log_file, database)
