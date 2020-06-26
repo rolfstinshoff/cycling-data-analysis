@@ -18,12 +18,14 @@ An API key is required for google maps. You can get one here:
 
 [https://developers.google.com/maps/documentation/javascript/get-api-key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
-Furthermore, you will have to create a .env file on the top level for your API key and to specify some path variables:
+Furthermore, you will have to create a .env file on the top level for your API key and to specify some path variables, i.e.:
 ```
-GOOGLE_MAPS_API_KEY
-FIT_FILE_FOLDER_PATH
-LOG_FILE_PATH
-EXCEL_OUTPUT_PATH
+GOOGLE_MAPS_API_KEY = your_key
+FIT_FILE_FOLDER_PATH = '/Your/Path/To/Fitfile/Folder'
+LOG_FILE_PATH = '/Your/Path/To/Logfile/Folder/log.txt'
+EXCEL_OUTPUT_PATH = '/Your/Path/To/ExceloutputFolder/'
+HTML_OUTPUT_PATH = '/Your/Path/To/HtmlOutput/Folder/activity_map.html'
+DATABASE_FILE_PATH = '/Your/Path/To/Database/Folder/CyclingData.db'
 ```
 
 ### Monitoring your workout folder (macOS only)

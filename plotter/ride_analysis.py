@@ -3,8 +3,12 @@ import matplotlib.colors as colors
 import matplotlib.cm as cmx
 import pandas as pd
 import numpy as np
-import six, webbrowser
+import six, webbrowser, os
 import plotter.activitymapper as am
+import dotenv as dot
+
+dot.load_dotenv()
+html = os.getenv('HTML_OUTPUT_PATH')
 
 # function that plots the ride analysis
 def plot_analysis_adjusted(df, sf, filename, log_file):
@@ -119,11 +123,12 @@ def create_data_table(df):
         if item in df.columns:
             if item == 'total_timer_time' or item == 'total_elapsed_time':
                 df[item] = pd.to_datetime(df[item], unit='s').dt.time 
-            df.rename(columns={item: switch(item)}, inplace=True)
-            arr.append(switch(item))
+            arr.append(item)
     if len(arr) != 0:
         result = df[arr].round(2).rename(index={0: 'Value'})
         result.index.name = 'Property'
+        for item in arr:
+            result.rename(columns={item: switch(item)}, inplace=True)
         return result.T
     else:
         return pd.DataFrame({'No data': 0})
@@ -156,9 +161,9 @@ def plot_google_map(df, log_file):
     gmap = am.Map()
     try:    
         df.apply(lambda row: gmap.add_point((row['position_lat'], row['position_long'], row['heart_rate'])), axis=1)
-        with open('activity_map.html', "w") as out:
+        with open(html, "w") as out:
             print(gmap, file=out)
-        webbrowser.get('open -a Chromium.app %s').open_new_tab('activity_map.html')
+        webbrowser.get('open -a Chromium.app %s').open_new_tab(html)
         with open(log_file, 'a+') as log:
             log.write('\nCreating Google Maps Heatmap...')
     except Exception as e:

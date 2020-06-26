@@ -86,10 +86,14 @@ def calculate(df, sf):
         sf['timestamp'] = sf['timestamp'].dt.tz_localize(None)
     if 'start_time' in sf.columns:
         sf['start_time'] = sf['start_time'].dt.tz_localize(None)
-    # if 'power' in df.columns:
-    #     NP = (df['power'].rolling(30).mean**4).mean()**(1/4)
-    #     return NP
     df['moving_time_seconds'] = (df.timestamp - df.at[0, 'timestamp']).fillna(pd.Timedelta(seconds=0)).astype('timedelta64[s]')
     df['moving_time_minutes'] = df.moving_time_seconds / 60
     df['moving_time_hours'] = df.moving_time_seconds / 3600
     df['moving_time'] = pd.to_datetime(df.moving_time_seconds, unit='s').dt.time
+    data_fields.extend(['moving_time_seconds', 'moving_time_minutes', 'moving_time_hours', 'moving_time'])
+    # if 'power' in df.columns:
+    #     FTP = input('Please enter your FTP:')
+    #     NP = (df['power'].rolling(30).mean**4).mean()**(1/4)
+    #     intensity = NP / FTP
+    #     TSS = df['moving_time_seconds'].max() * NP * intensity * 100 / (FTP * 3600)
+    #     return NP, intensity, TSS
